@@ -1,33 +1,28 @@
 #include "monty.h"
 
 /**
- * main - entry to program
- * @argv: argument vector
- * @argc: argument count
- *
- * Return: Always 0
+ * main - The entry point function for Monty Interpreter.
+ * @ac: The number of arguments.
+ * @av: The pointer to an array of inputed arguments.
+ * Return: Always 0 (on Success).
  */
-
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-	FILE *file_read;
+	FILE *fd = NULL;
 	int exit_status = EXIT_SUCCESS;
 
-	if (argc != 2)
+	if (ac != 2)
 		return (usage_error(1));
 
-	file_read = fopen(argv[1], "r");
-	if (file_read == NULL)
-		return (open_error(argv[1]));
+	fd = fopen(av[1], "r");
+	if (fd == NULL)
+		return (open_error(av[1]));
 
-	exit_status = monty_run(file_read);
-
-	fclose(file_read);
-
+	exit_status = monty_run(fd);
+	fclose(fd);
 	return (exit_status);
-		open_error(argv[1]);
-	monty_run(file_read);
-
+		open_error(av[1]);
+	monty_run(fd);
 	exit(EXIT_SUCCESS);
 	return (0);
 }
