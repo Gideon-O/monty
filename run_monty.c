@@ -1,4 +1,5 @@
 #include "monty.h"
+#include <stdio.h>
 
 /**
  * monty_run - A function that runs a Monty bytecodes script.
