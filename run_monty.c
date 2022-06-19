@@ -12,7 +12,7 @@ int monty_run(FILE *fd)
 	size_t len = 0, mode = 1;
 	unsigned int line_num = 0, exit_status = EXIT_SUCCESS;
 
-	while ((getline(&line, &len, fd)) != -1)
+	while (getline(&line, &len, fd) != -1)
 	{
 		line_num++;
 		if (empty_line(line, delim))
