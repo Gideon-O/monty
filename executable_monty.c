@@ -1,9 +1,15 @@
+/*
+ * File name:   monty_exec.c
+ * Authors:     Luis Miguel Vargas
+ *              Robinson Montes
+ */
+
 #include "monty.h"
 
 /**
- *  execute - Function that checks for a command "opcode" and execute the
+ * execute - Function that checks for a command "opcode" and execute the
  * function if there's a match.
- * @token: Token containing the opcode to execute.
+ * @token: Tokane containing the opcode to execute.
  * @stack: Doubly linked list representation of a stack.
  * @line_num: Line number where the opcode was found.
  * Return: EXIT_SUCCESS in success, or EXIT_FAILURE on failure.
@@ -13,7 +19,7 @@ int execute(char **token, stack_t **stack, unsigned int line_num)
 {
 	unsigned int i = 0;
 
-	intruction_t op[] = {
+	instruction_t op[] = {
 		{"pall", monty_pall},
 		{"pint", monty_pint},
 		{"pop", monty_pop},
@@ -29,6 +35,7 @@ int execute(char **token, stack_t **stack, unsigned int line_num)
 		{"rotr", monty_rotr},
 		{"null", NULL}
 	};
+
 	for (i = 0; i < 14; i++)
 	{
 		if (strcmp(op[i].opcode, token[0]) == 0)
@@ -43,13 +50,12 @@ int execute(char **token, stack_t **stack, unsigned int line_num)
 }
 
 /**
- * monty_push - A function that pushes an element to stack.
- * @stack: The pointer to the stck struct.
- * @token: The pointer to command.
- * @line_num: The number of the line.
- * Return: EXIT_SUCCESS on success, or EXIT_FAILURE on failure.
- */
-
+  * monty_push - A function that pushes an element to stack.
+  * @stack: The pointer to the stck struct.
+  * @token: The pointer to command.
+  * @line_num: The number of the line.
+  * Return: EXIT_SUCCESS on success, or EXIT_FAILURE on failure.
+  */
 int monty_push(stack_t **stack, char **token, unsigned int line_num)
 {
 	stack_t *new;
@@ -71,9 +77,11 @@ int monty_push(stack_t **stack, char **token, unsigned int line_num)
 		}
 		i++;
 	}
+
 	new = malloc(sizeof(stack_t));
 	if (new == NULL)
 		return (usage_error(0));
+
 	new->n = atoi(token[1]);
 	if ((*stack) != NULL)
 		(*stack)->prev = new;
@@ -82,6 +90,7 @@ int monty_push(stack_t **stack, char **token, unsigned int line_num)
 	*stack = new;
 	return (EXIT_SUCCESS);
 }
+
 /**
  * monty_pushq - A function that pushes an element to queue.
  * @stack: The pointer to the stck struct.
@@ -91,9 +100,9 @@ int monty_push(stack_t **stack, char **token, unsigned int line_num)
  */
 int monty_pushq(stack_t **stack, char **token, unsigned int line_num)
 {
-	tack_t *new, *tmp = NULL;
+	stack_t *new, *tmp = NULL;
 	int i = 0;
-	
+
 	if (token[1] == NULL)
 		return (f_errors(0, line_num));
 	while (token[1][i])
@@ -103,7 +112,6 @@ int monty_pushq(stack_t **stack, char **token, unsigned int line_num)
 			i++;
 			continue;
 		}
-		
 		if (token[1][i] < '0' || token[1][i] > '9')
 		{
 			free_stack(stack);
@@ -140,7 +148,6 @@ int monty_pushq(stack_t **stack, char **token, unsigned int line_num)
  * @line_num: The number of the line.
  * Return: Nothing.
  */
-
 void monty_pall(stack_t **stack, unsigned int line_num)
 {
 	stack_t *tmp = *stack;
